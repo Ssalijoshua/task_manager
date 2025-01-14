@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,9 @@ SECRET_KEY = 'django-insecure-i)i#-e=s8&w-@(_+f0ut6!q1es0l(2+@t_%c-s^s(6!a9q@r1u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*' # Allow all hosts
+]
 
 
 # Application definition
@@ -38,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tasks',
+    'debug_toolbar',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +53,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+
+INTERNAL_IPS = [
+    '127.0.0.1',  # Localhost
 ]
 
 ROOT_URLCONF = 'taskmanager.urls'
@@ -55,8 +65,10 @@ ROOT_URLCONF = 'taskmanager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
+        'APP_DIRS': True, # Looks for app level templates
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -75,12 +87,15 @@ WSGI_APPLICATION = 'taskmanager.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+'default': {
+'ENGINE': 'django.db.backends.postgresql',
+'NAME': os.getenv('DB_NAME', 'mydatabase'),
+'USER': os.getenv('DB_USER', 'postgres'),
+'PASSWORD': os.getenv('DB_PASSWORD', 'mysecretpassword'),
+'HOST': os.getenv('DB_HOST', 'localhost'),
+'PORT': os.getenv('DB_PORT', '5432'),
 }
-
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
