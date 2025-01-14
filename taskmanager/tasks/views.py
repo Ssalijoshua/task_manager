@@ -6,3 +6,6 @@ def home(request):
 
 def help(request):
     return render(request, 'tasks/help.html')  # Renders the help.html template
+
+def about(request):
+    return render(request, 'tasks/about.html')

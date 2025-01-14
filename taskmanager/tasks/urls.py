@@ -10,5 +10,5 @@ urlpatterns = [
     path('help/', TemplateView.as_view(template_name='tasks/help.html'), name='help'),
     path('', views.home, name='home'),  # Home page
     path('help/', views.help, name='help'),  # Help page
-    # path('tasks/', include('tasks.urls', namespace='tasks')),
+    path('about/', views.about, name='about'),
 ]
