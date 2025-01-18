@@ -1,1 +1,65 @@
+
 docker-compose.yml
+
+# Python-related ignores
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.swp
+*.swo
+*.bak
+*.log
+
+# Environment variables and settings
+.env
+*.env
+venv/
+env/
+ENV/
+
+# Django-specific ignores
+db.sqlite3
+db.sqlite3-journal
+/static/
+media/
+
+# Pytest and coverage
+.coverage
+htmlcov/
+.cache/
+.pytest_cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Docker-related files
+*.dockerfile
+*.env.docker
+docker-compose.override.yml
+
+# Node-related files (if using npm/yarn for static files)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Migrations
+migrations/__pycache__/
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# Compiled assets
+*.mo
+*.pot
+
+# Backup files
+*.~*
+*.tmp
