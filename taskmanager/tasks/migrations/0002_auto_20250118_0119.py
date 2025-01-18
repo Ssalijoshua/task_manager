@@ -1,7 +1,5 @@
 from django.db import migrations
 from django.contrib.auth.models import Group, Permission
-from django.contrib import admin
-from tasks.models import Task
 
 def create_groups(apps, schema_editor):
 
@@ -26,34 +24,9 @@ def create_groups(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-    ('tasks', '0001_initial.py'),
+    ('tasks', '0001_initial'),
     ]
     operations = [
     migrations.RunPython(create_groups),
     ]
 
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "status", "owner", "created_at", "updated_at")
-    list_filter = ("status",)
-    actions = ['mark_archived']
-
-def mark_archived(self, request, queryset):
-    queryset.update(status='ARCHIVED')
-    mark_archived.short_description = 'Mark selected tasks as archived'
-
-def has_change_permission(self, request, obj=None):
-    if request.user.has_perm('tasks.change_task'):
-        return True
-    return False
-
-def has_add_permission(self, request):
-    if request.user.has_perm('tasks.add_task'):
-        return True
-    return False
-
-def has_delete_permission(self, request, obj=None):
-    if request.user.has_perm('tasks.delete_task'):
-        return True
-    return False
-
-admin.site.register(Task, TaskAdmin)
